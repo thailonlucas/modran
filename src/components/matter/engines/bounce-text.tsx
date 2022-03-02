@@ -1,12 +1,6 @@
 //@ts-ignore
-import Matter from 'matter-js'
-import { LetterElement } from '../../components/2DElements/Shapes/shapes'
-const {Composite, Common, Constraint} = Matter
-
-interface IBounceTextAnimationReturn {
-    letterChain: any,
-    add: ({}: {text: string, letterSize?: number, position?: 'top'| 'center', width: number, height: number}) => void
-}
+import {Composite, Common, Constraint} from 'matter-js'
+import { LetterElement } from '../bodies'
 
 const sanitizeText = (text: string) => String(text).toLocaleLowerCase()
 

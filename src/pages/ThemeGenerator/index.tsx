@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { AnimationEngine } from './controller'
+import { getAnimationEngine } from './controller'
 import './style.scss'
 
 const ThemeGenerator = () => {
@@ -7,32 +7,23 @@ const ThemeGenerator = () => {
     const canvasRef = useRef(null)
     const width = document.documentElement.clientWidth
     const height = document.documentElement.clientHeight
+    const LETTER_SIZE = 36
     const [animationEngine, setAnimationEngine] = useState<any>()
-
     const [currentText, setCurrentText] = useState()
 
     useLayoutEffect(() => {
-      setUpAnimationEngine()
-    }, [])
-
-    const setUpAnimationEngine = () => {
-      const newAnimationEngine = AnimationEngine({width, height, canvasRef, boxRef})
-      newAnimationEngine.addMouseConstraint()
-      newAnimationEngine.addFloor()
-      newAnimationEngine.addBounceText({text: 'Ola', size: 36})
-      newAnimationEngine.run()
+      const newAnimationEngine = getAnimationEngine({width, height, canvasRef, boxRef})
+      newAnimationEngine.addBounceText({text: 'Greetings', size: LETTER_SIZE})
       setAnimationEngine(newAnimationEngine)
-    }
+    }, [])
 
     useEffect(()=>{
       if(!animationEngine) return
-      animationEngine.addBounceText({text: currentText, size: 36})
+      animationEngine.addBounceText({text: currentText, size: LETTER_SIZE})
     }, [currentText])
       
     return (
-        <div
-          ref={boxRef}
-          onClick={() => setCurrentText('Mundo')}>
+        <div ref={boxRef} onClick={() => setCurrentText('Mundo')}>
           <canvas ref={canvasRef} />
         </div>
       )
