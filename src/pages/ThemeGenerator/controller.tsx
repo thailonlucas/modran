@@ -1,4 +1,4 @@
-import { AnimationEngine } from "../../components/matter/engines/animation-engine"
+import { AnimationEngine } from "../../components/physics/engines/animation-engine"
 
 export const getAnimationEngine = ({width, height, canvasRef, boxRef}: IAnimationCanvas) => {
     let newAnimationEngine = AnimationEngine({width, height, canvasRef, boxRef})
