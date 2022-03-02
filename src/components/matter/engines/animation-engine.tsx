@@ -3,7 +3,7 @@ import {Engine, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-
 import { FloorElement } from '../bodies'
 import { BounceTextAnimation } from './bounce-text'
 
-export const AnimationEngine = (props: IAnimationCanvas) => {
+export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn => {
     const {width, height, canvasRef, boxRef} = props
     
     const engine = Engine.create({})
@@ -46,7 +46,7 @@ export const AnimationEngine = (props: IAnimationCanvas) => {
             const floor = FloorElement({width: width, height: 80, x: width/2, y:height+40})
             Composite.add(engine.world, [floor])
         },
-        addBounceText: ({text, size}: {text: string, size: number}) => {
+        addBounceText: ({text, size}) => {
             bounceText.add({text, letterSize: size, width, height})
         }
     }
