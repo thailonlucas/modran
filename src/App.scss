@@ -1,0 +1,15 @@
+$background-color: #FFF7E9;
+$pink: #FF007A;
+$blue: #00C2FF;
+$yellow: #FFB800;
+$black: #2B2B2B;
+
+body{
+  margin: 0;
+  padding: 0;
+  max-height: 100vh;
+  max-width: 100vw;
+  display: flex;
+  background-color: $background-color;
+  color: $black;
+}
