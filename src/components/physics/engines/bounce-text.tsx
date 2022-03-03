@@ -6,7 +6,7 @@ const sanitizeText = (text: string) => String(text).toLocaleLowerCase()
 
 export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationReturn => {
     const letterChain = Composite.create({label: 'letter chain'})
-    const separation = 2.5
+    const separation = 2.2
 
     const resetTextOnCanvas = () => {
         Composite.clear(letterChain)
@@ -19,11 +19,11 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
             y: (letterSize * 2)
         },
         center: {
-            x: ((width/2) - (text.length * letterSize)) + (i * (letterSize * separation)),
+            x: ((width/2) - ((text.length * letterSize) + separation)) + (i * (letterSize * separation)),
             y: (height / 2)
         }
     })
-
+    // ((width/2) - (text.length * (letterSize + separation))) - (i * (letterSize * separation))
     return({
         letterChain,
         add: ({text, letterSize = 32, position = 'center', width, height}) => {
@@ -39,7 +39,7 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
                 const sling = Constraint.create({
                     pointA: {x, y},
                     bodyB: letter,
-                    stiffness: Common.choose([0.03, 0.05, 0.09]),
+                    stiffness: 0.09,
                     length: 2,
                     render: {
                         visible: false

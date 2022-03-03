@@ -26,10 +26,18 @@ export const LetterElement = ({x, y, size, letter, inertia = 99999999, restituti
         size,
         render: {
             sprite:{
-                texture: require(`../sprites/${letter}.png`),
-                xScale: 0.45,
-                yScale: 0.45
+                texture: getLetterSprite(letter),
+                xScale: 0.3,
+                yScale: 0.3
             }
         },
     })
+}
+
+const getLetterSprite = (letter: string) => {
+    try{
+        return require(`../sprites/${letter}.png`)
+    }catch{
+        return require(`../sprites/emoji.png`)
+    }
 }
