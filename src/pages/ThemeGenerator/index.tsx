@@ -30,7 +30,12 @@ const ThemeGenerator = () => {
     }
       
     return (
-        <div ref={boxRef} onClick={onChangeTheme}>
+        <div id='theme-generator-screen' ref={boxRef} onClick={onChangeTheme}>
+          <div className='screen-labels'>
+            <h1 className='theme-label'>Seu tema é</h1>
+            <span className='theme-empty-space'></span>
+            <h2 className='theme-color-pallete-label'>paleta de cores</h2>
+          </div>
           <canvas ref={canvasRef} />
         </div>
       )

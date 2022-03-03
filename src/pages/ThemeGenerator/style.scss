@@ -1,5 +1,27 @@
-h1{
-    background-color: red;
-    flex: 1;
-    width: 100%;
+#theme-generator-screen{
+    .screen-labels{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        z-index: -1;
+
+        .theme-empty-space{
+            height: 300px;
+        }
+
+        .theme-label{
+            font-weight: 400;
+            font-size: 21px;
+        }
+
+        .theme-color-pallete-label{
+            font-weight: 100;
+        }
+    }
 }
