@@ -6,7 +6,7 @@ const sanitizeText = (text: string) => String(text).toLocaleLowerCase()
 
 export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationReturn => {
     const letterChain = Composite.create({label: 'letter chain'})
-    const separation = 2.2
+    const separation = 2
 
     const resetTextOnCanvas = () => {
         Composite.clear(letterChain)
@@ -39,8 +39,8 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
                 const sling = Constraint.create({
                     pointA: {x, y},
                     bodyB: letter,
-                    stiffness: 0.09,
-                    length: 2,
+                    stiffness: 0.05,
+                    length: 10,
                     render: {
                         visible: false
                     }

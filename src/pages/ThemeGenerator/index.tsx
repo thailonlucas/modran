@@ -8,7 +8,7 @@ const ThemeGenerator = () => {
     const canvasRef = useRef(null)
     const width = document.documentElement.clientWidth
     const height = document.documentElement.clientHeight
-    const LETTER_SIZE = 27
+    const LETTER_SIZE = 32
     const [animationEngine, setAnimationEngine] = useState<any>()
     const {theme, generateTheme} = useRandomGenerator()
 
