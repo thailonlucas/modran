@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useRandomGenerator } from '../../logic/generator/hook'
 import { getAnimationEngine } from './controller'
 import './style.scss'
 
@@ -9,7 +10,7 @@ const ThemeGenerator = () => {
     const height = document.documentElement.clientHeight
     const LETTER_SIZE = 36
     const [animationEngine, setAnimationEngine] = useState<any>()
-    const [currentText, setCurrentText] = useState()
+    const {theme, generateTheme} = useRandomGenerator()
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width, height, canvasRef, boxRef})
@@ -19,11 +20,15 @@ const ThemeGenerator = () => {
 
     useEffect(()=>{
       if(!animationEngine) return
-      animationEngine.addBounceText({text: currentText, size: LETTER_SIZE})
-    }, [currentText])
+      animationEngine.addBounceText({text: theme, size: LETTER_SIZE})
+    }, [theme])
+
+    const onChangeTheme = () => {
+      generateTheme()
+    }
       
     return (
-        <div ref={boxRef} onClick={() => setCurrentText('Mundo')}>
+        <div ref={boxRef} onClick={onChangeTheme}>
           <canvas ref={canvasRef} />
         </div>
       )
