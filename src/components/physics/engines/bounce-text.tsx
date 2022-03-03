@@ -6,21 +6,21 @@ const sanitizeText = (text: string) => String(text).toLocaleLowerCase()
 
 export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationReturn => {
     const letterChain = Composite.create({label: 'letter chain'})
-    const separation = 2
+    const SEPARATION = 2
 
     const resetTextOnCanvas = () => {
         Composite.clear(letterChain)
         Composite.remove(animationEngine.world, letterChain)
     }
 
-    const getLetterPosition = ({width, height, letterSize, i, text}: any) => ({
+    const getLetterPosition = ({width, height, letterSize, i, text, wordIndex}: any) => ({
         top: {
-            x: (letterSize * 2) + (i * (letterSize * separation)), 
+            x: (letterSize * 2) + (i * (letterSize * SEPARATION)), 
             y: (letterSize * 2)
         },
         center: {
-            x: ((width/2) - ((text.length * letterSize) + separation)) + (i * (letterSize * separation)),
-            y: (height / 2)
+            x: ((width/2) - (text.length * letterSize + SEPARATION)) + (i * (letterSize * SEPARATION)),
+            y: ((height / 2) - (((text.split(' ').length * (letterSize * SEPARATION)))) + (wordIndex * (letterSize * SEPARATION)))
         }
     })
 
@@ -30,25 +30,33 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
             resetTextOnCanvas()
             text = sanitizeText(text)
 
+            let words = text.split(' ')
             
-            for (let i = 0; i < text.length; i++ ){
-                if(text[i] == ' ') continue 
-                
-                const {x, y} = getLetterPosition({width, height, text, letterSize, i})[position]
-                const letter = LetterElement({x, y: y - (letterSize * 2), size: letterSize, letter: text[i]})
-                const sling = Constraint.create({
-                    pointA: {x, y},
-                    bodyB: letter,
-                    stiffness: 0.05,
-                    length: 10,
-                    render: {
-                        visible: false
-                    }
-                })
-                Composite.addBody(letterChain, letter)
-                Composite.addConstraint(letterChain, sling);
+            while(words.length > 3){
+                const lastWord = words.pop()
+                words[words.length - 1] = `${words[words.length - 1]}*${lastWord}`
             }
 
+            words.map((word: string, wordIndex: number) => {
+                if(word == ' ') return
+
+                for (let i = 0; i < word.length; i++ ){
+                    if(word[i] == ' ') continue 
+                    const {x, y} = getLetterPosition({width, height, text: word, letterSize, i, wordIndex})[position]
+                    const letter = LetterElement({x, y: y - (letterSize * 2), size: letterSize, letter: word[i]})
+                    const sling = Constraint.create({
+                        pointA: {x, y},
+                        bodyB: letter,
+                        stiffness: 0.05,
+                        length: 0,
+                        render: {
+                            visible: false
+                        }
+                    })
+                    Composite.addBody(letterChain, letter)
+                    Composite.addConstraint(letterChain, sling);
+                }
+            })
             Composite.add(animationEngine.world, [letterChain])
         }
         

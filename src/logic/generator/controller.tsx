@@ -52,13 +52,13 @@ export const RandomGenerator = ():IRandomGeneratorReturn => {
             if(['creatures', 'daily'].includes(theme)){
                 if(getRandomArbitrary(0, 10) < 3){
                     let selectedFood = getRandomListItem(foods.subject) 
-                    result = `${getRandomListItem([`d${selectedFood.article || 'o'}`, 'de', 'feit@ de', ''])} ${selectedFood.data}`
+                    result = `${getRandomListItem([`d${selectedFood.article || 'o'}`, 'de', 'feit@ de', ])} ${selectedFood.data}`
                 }else{
                     result = getRandomListItem(random.actions)
                 }
             }
             else if(theme === 'animals')
-                result = (getRandomArbitrary(0, 10) < 2) ? ' metade ' + getRandomListItem(animals.subject).data : getRandomListItem(random.actions)
+                result = (getRandomArbitrary(0, 10) < 2) ? 'metade ' + getRandomListItem(animals.subject).data : getRandomListItem(random.actions)
             else
                 result = (getRandomArbitrary(0, 10) < 2) ? getRandomListItem(daily.subject).data : getRandomListItem(random.actions)
             return result.split('@').join(article || 'o')
