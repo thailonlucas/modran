@@ -10,43 +10,39 @@ const ALL_SUBJECTS: any = {creatures, daily, foods, animals}
 
 export const RandomGenerator = ():IRandomGeneratorReturn => {
     return({
-        getTheme: () => getRandomListItem(animals.subject),
         getColorPallete: (quantity = 3) => {
-            return new Promise((accept) => {
-                let option = getRandomArbitrary(0,10)
-                let response: any = []
+            let option = getRandomArbitrary(0,10)
+            let response: any = []
+    
+            if(option<3){
+                response = getRandomListItem(colorPalletes.data)
+            }else{
+                while(response.length != quantity){
+                    let newColor = getRandomListItem(getRandomListItem(colorPalletes.data))
+                    if(!response.includes(newColor) && newColor.length == 7) 
+                        response.push(newColor)
+                }
+            }
+
+            return response
+        },
+        getTheme: () => {
+            let available = false
+            let response = ""
         
-                if(option<3){
-                    response = getRandomListItem(colorPalletes.data)
-                }else{
-                    while(response.length != quantity){
-                        let newColor = getRandomListItem(getRandomListItem(colorPalletes.data))
-                        if(!response.includes(newColor) && newColor.length == 7) response.push(newColor)
-                    }
+            while(!available) {
+                let subject: any = RandomGenerator().getSubject()
+                let predicate = RandomGenerator().getPredicate(subject)
+                
+                if(String(subject).toLowerCase() !== String(predicate).toLowerCase()){
+                    available = true
+                    response = `${subject.data} ${predicate}`
                 }
-                accept(response)
-            })
+            }
+            return response
         },
-        getNewCombinedTheme: () => {
-            return new Promise((accept) => {
-                let available = false
-                let response = ""
-            
-                while(!available) {
-                    let subject = getRandomSubject()
-                    let predicate = getRandomPredicate(subject)
-                    
-                    if(String(subject).toLowerCase() !== String(predicate).toLowerCase()){
-                        available = true
-                        response = `${subject.data} ${predicate}`
-                    }
-                }
-            
-                accept(response)
-            })
-        },
-        getSubject: () => {
-            const subjectTheme = getRandomListItem(Object.keys(ALL_SUBJECTS))
+        getSubject: (subject) => {
+            const subjectTheme = subject || getRandomListItem(Object.keys(ALL_SUBJECTS))
             let subjects = ALL_SUBJECTS[subjectTheme].subject
             let selectedSubject = getRandomListItem(subjects)
             return {theme: subjectTheme, ...selectedSubject}

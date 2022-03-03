@@ -23,7 +23,7 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
             y: (height / 2)
         }
     })
-    // ((width/2) - (text.length * (letterSize + separation))) - (i * (letterSize * separation))
+
     return({
         letterChain,
         add: ({text, letterSize = 32, position = 'center', width, height}) => {

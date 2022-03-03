@@ -7,8 +7,8 @@ export const useRandomGenerator = () => {
     const randomGenerator = RandomGenerator()
 
     const generateTheme = () => {
-        setTheme(randomGenerator.getTheme().data)
-        randomGenerator.getColorPallete().then((colorPallete: any) =>  setColorPalette(colorPallete))
+        setTheme(randomGenerator.getTheme())
+        setColorPalette(randomGenerator.getColorPallete())
     }
 
     return {colorPallete, theme, generateTheme}
