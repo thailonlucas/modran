@@ -7,9 +7,11 @@ interface IAnimationCanvas{
 
 interface IAnimationCanvasReturn{
     run: () => void
+    add: (body) => void
     addFloor: () => void
     addBounceText: ({text, size}: {text: string, size: number}) => void
     addMouseConstraint: () => void
+    addMouseFollower: (body: any) => void
     engine: any
 }
 

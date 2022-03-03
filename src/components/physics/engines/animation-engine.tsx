@@ -1,5 +1,5 @@
 //@ts-ignore
-import {Engine, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import {Engine, Events, Body, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
 import { FloorElement } from '../bodies'
 import { BounceTextAnimation } from './bounce-text'
 
@@ -29,6 +29,9 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             Render.run(render)
             Runner.run(runner, engine)
         },
+        add: (body) => {
+            Composite.add(engine.world,body)
+        },
         addMouseConstraint: ({stiffness, visible}: {stiffness?: number, visible?: boolean} = {}) => {
             var mouse = Mouse.create(render.canvas),
             mouseConstraint = MouseConstraint.create(engine, {
@@ -48,6 +51,21 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
         },
         addBounceText: ({text, size}) => {
             bounceText.add({text, letterSize: size, width, height})
+        },
+        addMouseFollower: (body: any) => {
+            let mouse = Mouse.create(render.canvas);
+            Composite.add(engine.world, body)
+
+            Events.on(engine, 'afterUpdate', function() {
+                if (!mouse.position.x) {
+                    return;
+                }
+
+                Body.setPosition(body, {
+                    x: mouse.position.x,
+                    y: mouse.position.y
+                });
+            });
         }
     }
 }

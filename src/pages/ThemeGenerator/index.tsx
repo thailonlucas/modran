@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { MouseFollower } from '../../components/physics/bodies/mouseFollower'
 import { useRandomGenerator } from '../../logic/generator/hook'
 import { getAnimationEngine } from './controller'
 import './style.scss'
@@ -15,6 +16,7 @@ const ThemeGenerator = () => {
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width, height, canvasRef, boxRef})
       newAnimationEngine.addBounceText({text: 'Greetings', size: LETTER_SIZE})
+      newAnimationEngine.addMouseFollower(MouseFollower().body)
       setAnimationEngine(newAnimationEngine)
     }, [])
 

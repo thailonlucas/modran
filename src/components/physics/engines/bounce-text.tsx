@@ -47,7 +47,7 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
                     const sling = Constraint.create({
                         pointA: {x, y},
                         bodyB: letter,
-                        stiffness: 0.05,
+                        stiffness: 0.03,
                         length: 0,
                         render: {
                             visible: false
