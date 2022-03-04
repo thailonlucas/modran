@@ -1,6 +1,7 @@
 //@ts-ignore
 import {Composite, Common, Constraint} from 'matter-js'
 import { LetterElement } from '../bodies'
+import { Sling } from '../constraints/sling'
 
 const sanitizeText = (text: string) => String(text).toLocaleLowerCase()
 
@@ -29,7 +30,6 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
         add: ({text, letterSize = 32, position = 'center', width, height}) => {
             resetTextOnCanvas()
             text = sanitizeText(text)
-
             let words = text.split(' ')
             
             while(words.length > 3){
@@ -39,20 +39,11 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
 
             words.map((word: string, wordIndex: number) => {
                 if(word == ' ') return
-
                 for (let i = 0; i < word.length; i++ ){
                     if(word[i] == ' ') continue 
                     const {x, y} = getLetterPosition({width, height, text: word, letterSize, i, wordIndex})[position]
                     const letter = LetterElement({x, y: y - (letterSize * 2), size: letterSize, letter: word[i]})
-                    const sling = Constraint.create({
-                        pointA: {x, y},
-                        bodyB: letter,
-                        stiffness: 0.03,
-                        length: 0,
-                        render: {
-                            visible: false
-                        }
-                    })
+                    const sling = Sling({x, y, bodyB: letter, length: 0})
                     Composite.addBody(letterChain, letter)
                     Composite.addConstraint(letterChain, sling);
                 }
