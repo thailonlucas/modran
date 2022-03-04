@@ -19,7 +19,7 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
             y: (letterSize * 2)
         },
         center: {
-            x: ((width/2) - (text.length * letterSize + SEPARATION)) + (i * (letterSize * SEPARATION)),
+            x: ((width/2) - (text.length * (letterSize))) + (i * (letterSize * SEPARATION)) + (letterSize + SEPARATION),
             y: ((height / 2) - (((text.split(' ').length * (letterSize * SEPARATION)))) + (wordIndex * (letterSize * SEPARATION)))
         }
     })

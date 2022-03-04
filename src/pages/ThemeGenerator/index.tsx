@@ -15,7 +15,7 @@ const ThemeGenerator = () => {
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width, height, canvasRef, boxRef})
-      newAnimationEngine.addBounceText({text: 'Greetings', size: LETTER_SIZE})
+      newAnimationEngine.addBounceText({text: 'Aperte Aqui', size: LETTER_SIZE})
       newAnimationEngine.addMouseFollower(MouseFollower().body)
       setAnimationEngine(newAnimationEngine)
     }, [])
