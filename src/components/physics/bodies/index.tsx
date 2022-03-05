@@ -30,7 +30,7 @@ export const LetterElement = ({x, y, size, letter, inertia = 99999999, restituti
                 xScale: 0.3,
                 yScale: 0.3
             }
-        },
+        }
     })
 }
 
