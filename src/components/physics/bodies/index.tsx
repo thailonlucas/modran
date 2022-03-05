@@ -19,16 +19,16 @@ export const ShapeEllement = ({x, y, size, color}: IMatterShape) => {
     })
 }
 
-export const LetterElement = ({x, y, size, letter, inertia = 99999999, restitution = 0.7}: IMatterLetter) => {
-    return Bodies.circle(x, y, size, {
+export const LetterElement = ({x, y, size, letter, inertia = 99999999, restitution = 0.1}: IMatterLetter) => {
+    return Bodies.circle(x, y, size / 2, {
         restitution,
         inertia,
         size,
         render: {
             sprite:{
                 texture: getLetterSprite(letter),
-                xScale: 0.3,
-                yScale: 0.3
+                xScale: 0.25,
+                yScale: 0.25
             }
         }
     })

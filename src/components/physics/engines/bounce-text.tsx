@@ -49,7 +49,7 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
                     const letter = LetterElement({x, y: y - (letterSize * 2), size: letterSize, letter: letterWithoutAccents})
                     const sling = Sling({x, y, bodyB: letter, length: 0})
 
-                    
+                    // TODO A refactoring in this part
                     const acute = ['á', 'é', 'í','ó', 'ú']
                     const circumflex = ['â', 'ê', 'î','ô', 'û']
                     const tilde = ['ã','õ', 'ñ']
@@ -86,17 +86,11 @@ export const BounceTextAnimation = (animationEngine: any):IBounceTextAnimationRe
                                 }
                             }
                         })
+
                         if(letterAccent.type === 'acute')
                             Body.rotate(accentElement, -35)
                             
-                        const anchorPoint = Constraint.create({
-                            pointA: {x, y: y - (letterSize + 3.5)},
-                            bodyB: accentElement,
-                            length: 0,
-                            render:{
-                                visible: false,
-                            }
-                        })
+                        const anchorPoint =  Sling({x, y: y - (letterSize + 3.5), bodyB: accentElement, length: 0})
                         Composite.addBody(letterChain, accentElement)
                         Composite.addConstraint(letterChain, anchorPoint);
                     }
