@@ -1,6 +1,6 @@
 //@ts-ignore
 import {Engine, Events, Body, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
-import { FloorElement } from '../bodies'
+import { FloorElement } from '../bodies/floor'
 import { BounceTextAnimation } from './bounce-text'
 
 export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn => {

@@ -1,11 +1,30 @@
 //@ts-ignore
 import { Bodies, Body } from 'matter-js'
 const ACCENT_HEIGHT = 7
+const LETTER_ACCENT = [
+    {
+        group: ['á', 'é', 'í','ó', 'ú'],
+        name: 'acute',
+        position: 'top'
+    },{
+        group: ['â', 'ê', 'î','ô', 'û'],
+        name: 'circumflex',
+        position: 'top'
+    },
+    {
+        group: ['ã','õ', 'ñ'],
+        name: 'tilde',
+        position: 'top'
+    }
+]
 
-export const FloorElement = ({x, y, width, height}: IMatterFloor) => Bodies.rectangle(x, y, width, height , {
-    isStatic: true,
-    render: {fillStyle: 'none',},
-})
+const getLetterSprite = (letter: string) => {
+    try{
+        return require(`../sprites/${letter}.png`)
+    }catch{
+        return require(`../sprites/emoji.png`)
+    }
+}
 
 export const ShapeEllement = ({x, y, size, color}: IMatterShape) => {
     return Bodies.circle(x, y, size, {
@@ -45,31 +64,6 @@ export const LetterElement = (props: IMatterLetter) => {
         accent
     }
 }
-
-const getLetterSprite = (letter: string) => {
-    try{
-        return require(`../sprites/${letter}.png`)
-    }catch{
-        return require(`../sprites/emoji.png`)
-    }
-}
-
-const LETTER_ACCENT = [
-    {
-        group: ['á', 'é', 'í','ó', 'ú'],
-        name: 'acute',
-        position: 'top'
-    },{
-        group: ['â', 'ê', 'î','ô', 'û'],
-        name: 'circumflex',
-        position: 'top'
-    },
-    {
-        group: ['ã','õ', 'ñ'],
-        name: 'tilde',
-        position: 'top'
-    }
-]
 
 export const LetterAccentElement = (props: any) => {
     const {x, y, size, letter, inertia = 999999, restitution = 0.1} = props

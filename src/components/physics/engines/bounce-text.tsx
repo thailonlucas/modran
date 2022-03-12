@@ -1,6 +1,6 @@
 //@ts-ignore
 import {Composite} from 'matter-js'
-import { LetterElement } from '../bodies'
+import { LetterElement } from '../bodies/letters'
 import { Sling } from '../constraints/sling'
 
 const sanitizeText = (text: string) => String(text).toLocaleLowerCase()
