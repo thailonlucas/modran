@@ -17,9 +17,9 @@ export const RandomGenerator = ():IRandomGeneratorReturn => {
             if(option<3){
                 response = getRandomListItem(colorPalletes.data)
             }else{
-                while(response.length != quantity){
+                while(response.length !== quantity){
                     let newColor = getRandomListItem(getRandomListItem(colorPalletes.data))
-                    if(!response.includes(newColor) && newColor.length == 7) 
+                    if(!response.includes(newColor) && newColor.length === 7) 
                         response.push(newColor)
                 }
             }
