@@ -7,15 +7,26 @@ interface IAnimationCanvas{
 
 interface IAnimationCanvasReturn{
     run: () => void
-    add: (body) => void
+    add: (target: any, body: any) => void
+    remove: (target: any, body: any) => void
+    clear: (body: any) => void
+    composite: ({label, id}: {label: string, id?: number}) => any
+    circle: (props: ICircleProps) => any
     addFloor: () => void
     addBounceText: ({text, size}: {text: string, size: number}) => void
     addMouseConstraint: () => void
-    addMouseFollower: (body: any) => void
+    onAfterUpdate: (callback?: any) => void
     engine: any
+    world: any
+    width: number,
+    height: number
 }
 
 interface IBounceTextAnimationReturn {
     letterChain: any,
     add: ({}: {text: string, letterSize?: number, position?: 'top'| 'center', width: number, height: number}) => void
+}
+
+interface IRandomShapesGeneratorReturn {
+    generate: () => void
 }

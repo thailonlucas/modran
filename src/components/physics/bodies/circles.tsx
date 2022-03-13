@@ -1,10 +1,22 @@
 //@ts-ignore
 import {Bodies} from 'matter-js'
 
-export const Circle = ({x, y, r, options}: any) => {
-    let body = Bodies.circle(x, y, r, options);
+interface ICircleProps{
+    x: number,
+    y: number,
+    radius: number,
+    options?: ICircleOptions
+}
 
-    return({
-        body
-    })
+interface ICircleOptions{
+    restitution?: number,
+    render?: ICircleRender
+}
+
+interface ICircleRender{
+    fillStyle?: string
+}
+
+export const Circle = ({x, y, radius, options}: ICircleProps) => {
+    return Bodies.circle(x, y, radius, options);
 }
