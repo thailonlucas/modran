@@ -1,5 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { MouseFollower } from '../../components/physics/bodies/mouseFollower'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { RandomShapesGenerator } from '../../components/physics/engines/random-shapes'
 import { useRandomGenerator } from '../../logic/generator/hook'
 import { getAnimationEngine } from './controller'
 import './style.scss'
@@ -11,14 +11,19 @@ const ThemeGenerator = () => {
     const height = document.documentElement.clientHeight
     const LETTER_SIZE = 32
     const [animationEngine, setAnimationEngine] = useState<any>()
-    const {theme, generateTheme} = useRandomGenerator()
+    const {theme, colorPallete, generateTheme} = useRandomGenerator()
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width, height, canvasRef, boxRef})
-      newAnimationEngine.addBounceText({text: 'Aperte Aqui', size: LETTER_SIZE})
-      newAnimationEngine.addMouseFollower(MouseFollower().body)
+      newAnimationEngine.addBounceText({text: 'Aperte Aqui', size: LETTER_SIZE}) 
       setAnimationEngine(newAnimationEngine)
     }, [])
+
+    const addRandomShapes: any = useMemo(() => {
+      if(!animationEngine) return 
+      const randomShapesGenerator = RandomShapesGenerator(animationEngine)
+      return (colors: string[]) => randomShapesGenerator.generate({min: 5, max: 10, minSize: 10, maxSize: 80, colors})
+    }, [animationEngine])
 
     useEffect(()=>{
       if(!animationEngine) return
@@ -27,6 +32,7 @@ const ThemeGenerator = () => {
 
     const onChangeTheme = () => {
       generateTheme()
+      addRandomShapes()
     }
       
     return (

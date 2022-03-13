@@ -1,5 +1,6 @@
 //@ts-ignore
-import {Engine, Events, Body, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
 import { BounceTextAnimation } from './bounce-text'
 
@@ -24,13 +25,26 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
 
     return {
         engine,
+        world: engine.world,
         ...props,
         run: () => {
             Render.run(render)
             Runner.run(runner, engine)
         },
-        add: (body) => {
-            Composite.add(engine.world,body)
+        add: (target: any, body: any) => {
+            Composite.add(target, body)
+        },
+        remove: (target: any, body: any) => {
+            Composite.remove(target, body)
+        },
+        clear: (body: any) => {
+            Composite.clear(body)
+        },
+        composite: (props) => {
+            return Composite.create(props)
+        },
+        circle: (props) => {
+            return Circle(props)
         },
         addMouseConstraint: ({stiffness, visible}: {stiffness?: number, visible?: boolean} = {}) => {
             var mouse = Mouse.create(render.canvas),
@@ -52,20 +66,8 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
         addBounceText: ({text, size}) => {
             bounceText.add({text, letterSize: size, width, height})
         },
-        addMouseFollower: (body: any) => {
-            let mouse = Mouse.create(render.canvas);
-            Composite.add(engine.world, body)
-
-            Events.on(engine, 'afterUpdate', function() {
-                if (!mouse.position.x) {
-                    return;
-                }
-
-                Body.setPosition(body, {
-                    x: mouse.position.x,
-                    y: mouse.position.y
-                });
-            });
+        onAfterUpdate: (callback: any) => {
+            Events.on(engine, 'afterUpdate', callback);
         }
     }
 }

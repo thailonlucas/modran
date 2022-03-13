@@ -28,5 +28,13 @@ interface IBounceTextAnimationReturn {
 }
 
 interface IRandomShapesGeneratorReturn {
-    generate: () => void
+    generate: (props: IRandomShapesGenerateProps) => void
+}
+
+interface IRandomShapesGenerateProps {
+    min: number,
+    max: number,
+    minSize: number,
+    maxSize: number,
+    colors?: string[]
 }
