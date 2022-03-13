@@ -32,7 +32,7 @@ const ThemeGenerator = () => {
 
     const onChangeTheme = () => {
       generateTheme()
-      addRandomShapes()
+      addRandomShapes(colorPallete)
     }
       
     return (
