@@ -26,19 +26,6 @@ const getLetterSprite = (letter: string) => {
     }
 }
 
-export const ShapeEllement = ({x, y, size, color}: IMatterShape) => {
-    return Bodies.circle(x, y, size, {
-        restitution: 0.1,
-        render: {
-            fillStyle: color || 'black',
-            sprite:{
-                xScale: 0.5,
-                yScale:0.5
-            }
-        },
-    })
-}
-
 export const LetterElement = (props: IMatterLetter) => {
     const {x, y, size, letter, inertia = 99999999, restitution = 0.1} = props
     const letterWithoutAccent = letter.normalize("NFD").replace(/\p{Diacritic}/gu, "")
