@@ -12,4 +12,35 @@ body{
   display: flex;
   background-color: $background-color;
   color: $black;
+
+  a:visited, a:link, a:hover{
+    color: $black;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  a:hover{
+    color: $pink;
+  }
+
+  a:active{
+    color: $blue;
+  }
+}
+
+header{
+  display: flex;
+  position: absolute;
+  top: 0;
+  padding: 16px;
+  width: 100vw;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  .creator-info{
+    h1{
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
 }

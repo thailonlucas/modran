@@ -19,7 +19,7 @@ const ThemeGenerator = () => {
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width: WIDTH, height: HEIGHT, canvasRef, boxRef})
-      newAnimationEngine.addBounceText({text: 'Aperte Aqui', size: LETTER_SIZE}) 
+      newAnimationEngine.addBounceText({text: 'Click para gerar', size: LETTER_SIZE}) 
       setAnimationEngine(newAnimationEngine)
     }, [])
 
