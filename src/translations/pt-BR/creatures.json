@@ -33,7 +33,7 @@
         {"data": "Ogro"},
         {"data": "Ogra", "article": "a"},
         {"data": "Troll"},
-        {"data": "Árvore Mágica", "article": "a"},
+        {"data": "Árvore", "article": "a"},
         {"data": "Monstro"},
         {"data": "Centauro"},
         {"data": "Fauno"},
@@ -44,6 +44,14 @@
         {"data": "Vidente", "article": "a"},
         {"data": "Criatura Mágica", "article": "a"},
         {"data": "Esfinge", "article": "a"},
-        {"data": "Unicórnio"}
+        {"data": "Múmia", "article": "a"},
+        {"data": "Deusa", "article": "a"},
+        {"data": "Deus"},
+        {"data": "Espírito"},
+        {"data": "Unicórnio"},
+        {"data": "Fantoche"},
+        {"data": "Marionete", "article": "a"},
+        {"data": "Esfinge", "article": "a"},
+        {"data": "Magia", "article": "a"}
     ]
 }

@@ -14,7 +14,6 @@
         {"data": "Kiwi"},
         {"data": "Pêssego"},
         {"data": "Milho"},
-        {"data": "Cachorro-Quente"},
         {"data": "Chiclete"},
         {"data": "Marshmallow"},
         {"data": "Coxinha", "article": "a"},
@@ -39,7 +38,6 @@
         {"data": "Batata", "article": "a"},
         {"data": "Churros"},
         {"data": "Casquinha", "article": "a"},
-        {"data": "Pão de queijo"},
         {"data": "Picolé"}
     ]
 }
