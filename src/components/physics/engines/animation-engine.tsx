@@ -1,9 +1,7 @@
 //@ts-ignore
 import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
-import { getRandomArbitrary } from '../../../logic/utils'
 import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
-import { Sling } from '../constraints/sling'
 import { BounceEllement } from './bounce-text'
 
 export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn => {
@@ -24,7 +22,6 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
     const runner = Runner.create()
     const render = Render.create(renderConfig)
     const bounceEllement = BounceEllement(engine)
-    const colorPallete: any[] = []
 
     return {
         engine,
@@ -68,27 +65,6 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
         },
         addBounceText: ({text, size}) => {
             bounceEllement.addText({text, letterSize: size, width, height})
-        },
-        addColorPallete:({colors}) => {
-            for (let i = 0; i <= colors.length; i++){
-                const size = 21
-                const SEPARATION = 32
-
-                const x = ((width / 2) - ((colors.length) * ((size + SEPARATION) / 2))) + ((size + SEPARATION) * i) 
-                let y = height - 235
-                const circle = Circle({x: getRandomArbitrary(0, width), y: getRandomArbitrary(0, height), radius: size, options:{render:{fillStyle:colors[i]}}})
-
-                if(colorPallete[i]){
-                    Composite.remove(engine.world, colorPallete[i].bodyB)
-                    colorPallete[i].bodyB = circle
-                    Composite.add(engine.world, circle)
-                }else{
-                    colorPallete[i] = Sling({x, y, bodyB: circle, length: 0}) 
-                    Composite.add(engine.world, circle)
-                    Composite.add(engine.world, colorPallete[i])  
-                }
-                
-            }
         },
         onAfterUpdate: (callback: any) => {
             Events.on(engine, 'afterUpdate', callback);

@@ -38,7 +38,7 @@ export const RandomShapesGenerator = (animationEngine: IAnimationCanvasReturn):I
     }
 
     return({
-        generate: ({min, max, minSize, maxSize, colors}) => {
+        show: ({min, max, minSize, maxSize, colors}) => {
             animationEngine.clear(randomShapesGroup)
             animationEngine.remove(animationEngine.world, randomShapesGroup)
             generateRandomCircles({colors, min, max, minSize, maxSize})

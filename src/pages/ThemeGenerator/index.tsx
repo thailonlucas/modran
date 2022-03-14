@@ -1,28 +1,42 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { ColorPalleteEllement } from '../../components/physics/engines/color-pallete'
 import { RandomShapesGenerator } from '../../components/physics/engines/random-shapes'
 import { useRandomGenerator } from '../../logic/generator/hook'
 import { getAnimationEngine } from './controller'
 import './style.scss'
 
 const ThemeGenerator = () => {
+    const LETTER_SIZE = 20
+    const WIDTH = document.documentElement.clientWidth
+    const HEIGHT = document.documentElement.clientHeight
+
     const boxRef = useRef(null)
     const canvasRef = useRef(null)
-    const width = document.documentElement.clientWidth
-    const height = document.documentElement.clientHeight
-    const LETTER_SIZE = 20
+    const colorPalleteLabel = useRef(null)
+
     const [animationEngine, setAnimationEngine] = useState<any>()
     const {theme, colorPallete, generateTheme} = useRandomGenerator()
 
     useLayoutEffect(() => {
-      const newAnimationEngine = getAnimationEngine({width, height, canvasRef, boxRef})
+      const newAnimationEngine = getAnimationEngine({width: WIDTH, height: HEIGHT, canvasRef, boxRef})
       newAnimationEngine.addBounceText({text: 'Aperte Aqui', size: LETTER_SIZE}) 
       setAnimationEngine(newAnimationEngine)
     }, [])
 
-    const addRandomShapes: any = useMemo(() => {
+    const updateShapes: any = useMemo(() => {
       if(!animationEngine) return 
+
       const randomShapesGenerator = RandomShapesGenerator(animationEngine)
-      return (colors: string[]) => randomShapesGenerator.generate({min: 5, max: 10, minSize: 10, maxSize: 80, colors})
+      const colorPalleteEllement = ColorPalleteEllement(animationEngine, {
+        x: WIDTH/2,
+        y:colorPalleteLabel.current.offsetTop + 70,
+        size:22
+      })
+      
+      return (colors: string[]) => {
+        colorPalleteEllement.show({colors})
+        randomShapesGenerator.show({min: 5, max: 10, minSize: 10, maxSize: 80, colors})
+      }
     }, [animationEngine])
 
     useEffect(()=>{
@@ -32,8 +46,7 @@ const ThemeGenerator = () => {
 
     const onChangeTheme = () => {
       generateTheme()
-      addRandomShapes(colorPallete)
-      animationEngine.addColorPallete({colors: colorPallete})
+      updateShapes(colorPallete)
     }
       
     return (
@@ -41,7 +54,9 @@ const ThemeGenerator = () => {
           <div className='screen-labels'>
             <h1 className='theme-label'>Seu tema é</h1>
             <span className='theme-empty-space'></span>
-            <h2 className='theme-color-pallete-label'>paleta de cores</h2>
+            <h2 id='color-pallete-label' className='theme-color-pallete-label' ref={colorPalleteLabel}>
+              paleta de cores
+            </h2>
           </div>
           <canvas ref={canvasRef} />
         </div>
