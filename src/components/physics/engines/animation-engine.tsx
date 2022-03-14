@@ -2,7 +2,8 @@
 import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
 import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
-import { BounceTextAnimation } from './bounce-text'
+import { Sling } from '../constraints/sling'
+import { BounceEllement } from './bounce-text'
 
 export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn => {
     const {width, height, canvasRef, boxRef} = props
@@ -21,7 +22,8 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
     }
     const runner = Runner.create()
     const render = Render.create(renderConfig)
-    const bounceText = BounceTextAnimation(engine)
+    const bounceEllement = BounceEllement(engine)
+    const colorPallete: any[] = []
 
     return {
         engine,
@@ -64,7 +66,28 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             Composite.add(engine.world, [floor])
         },
         addBounceText: ({text, size}) => {
-            bounceText.add({text, letterSize: size, width, height})
+            bounceEllement.addText({text, letterSize: size, width, height})
+        },
+        addColorPallete:({colors}) => {
+            for (let i = 0; i <= colors.length; i++){
+                const size = 21
+                const SEPARATION = 32
+
+                const x = ((width / 2) - ((colors.length) * ((size + SEPARATION) / 2))) + ((size + SEPARATION) * i) 
+                let y = height - 235
+                const circle = Circle({x: 0, y, radius: size, options:{render:{fillStyle:colors[i]}}})
+
+                if(colorPallete[i]){
+                    Composite.remove(engine.world, colorPallete[i].bodyB)
+                    colorPallete[i].bodyB = circle
+                    Composite.add(engine.world, circle)
+                }else{
+                    colorPallete[i] = Sling({x, y, bodyB: circle, length: 0}) 
+                    Composite.add(engine.world, circle)
+                    Composite.add(engine.world, colorPallete[i])  
+                }
+                
+            }
         },
         onAfterUpdate: (callback: any) => {
             Events.on(engine, 'afterUpdate', callback);

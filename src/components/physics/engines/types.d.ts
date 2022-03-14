@@ -14,6 +14,7 @@ interface IAnimationCanvasReturn{
     circle: (props: ICircleProps) => any
     addFloor: () => void
     addBounceText: ({text, size}: {text: string, size: number}) => void
+    addColorPallete: ({colors, x, y}: {colors: string[], x: number, y: number}) => void
     addMouseConstraint: () => void
     onAfterUpdate: (callback?: any) => void
     engine: any
@@ -24,7 +25,7 @@ interface IAnimationCanvasReturn{
 
 interface IBounceTextAnimationReturn {
     letterChain: any,
-    add: ({}: {text: string, letterSize?: number, position?: 'top'| 'center', width: number, height: number}) => void
+    addText: ({}: {text: string, letterSize?: number, position?: 'top'| 'center', width: number, height: number}) => void
 }
 
 interface IRandomShapesGeneratorReturn {

@@ -30,7 +30,7 @@ export const LetterElement = (props: IMatterLetter) => {
     const {x, y, size, letter, inertia = 99999999, restitution = 0.1} = props
     const letterWithoutAccent = letter.normalize("NFD").replace(/\p{Diacritic}/gu, "")
 
-    const body = Bodies.circle(x, y, size / 2, {
+    const body = Bodies.circle(x, y, size, {
         restitution,
         inertia,
         size,
@@ -43,7 +43,7 @@ export const LetterElement = (props: IMatterLetter) => {
         }
     })
 
-    const accent = LetterAccentElement({y: y - size, x, letter, size: size / 2})
+    const accent = LetterAccentElement({y: y - size * 1.7, x, letter, size: size})
 
     return{
         ...props,

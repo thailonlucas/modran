@@ -9,7 +9,7 @@ const ThemeGenerator = () => {
     const canvasRef = useRef(null)
     const width = document.documentElement.clientWidth
     const height = document.documentElement.clientHeight
-    const LETTER_SIZE = 32
+    const LETTER_SIZE = 20
     const [animationEngine, setAnimationEngine] = useState<any>()
     const {theme, colorPallete, generateTheme} = useRandomGenerator()
 
@@ -33,6 +33,7 @@ const ThemeGenerator = () => {
     const onChangeTheme = () => {
       generateTheme()
       addRandomShapes(colorPallete)
+      animationEngine.addColorPallete({colors: colorPallete})
     }
       
     return (

@@ -10,7 +10,7 @@ interface ISlingProps{
     visible?: boolean
 }
 
-export const Sling = ({x, y, bodyB, stiffness = 0.03, length, visible}: ISlingProps) => {
+export const Sling = ({x, y, bodyB, stiffness = 0.04, length, visible}: ISlingProps) => {
     return Constraint.create({
         pointA: {x, y},
         bodyB,
