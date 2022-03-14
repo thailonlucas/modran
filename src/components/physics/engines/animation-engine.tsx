@@ -1,5 +1,6 @@
 //@ts-ignore
 import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import { getRandomArbitrary } from '../../../logic/utils'
 import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
 import { Sling } from '../constraints/sling'
@@ -75,7 +76,7 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
 
                 const x = ((width / 2) - ((colors.length) * ((size + SEPARATION) / 2))) + ((size + SEPARATION) * i) 
                 let y = height - 235
-                const circle = Circle({x: 0, y, radius: size, options:{render:{fillStyle:colors[i]}}})
+                const circle = Circle({x: getRandomArbitrary(0, width), y: getRandomArbitrary(0, height), radius: size, options:{render:{fillStyle:colors[i]}}})
 
                 if(colorPallete[i]){
                     Composite.remove(engine.world, colorPallete[i].bodyB)
