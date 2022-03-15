@@ -11,18 +11,19 @@ export const ColorPalleteEllement = (animationEngine: IAnimationCanvasReturn, op
     let current: any = []
     
     const show = ({colors = COLORS}: any) => {
-        for (let i = 0; i <= colors.length; i++){
-            const posX = (x - ((colors.length) * ((size + SEPARATION) / 2))) + ((size + SEPARATION) * i)
-            const posY = y
-
-            const circle = Circle({x: posX, y: getRandomArbitrary(y/2, y), radius: size, options:{render:{fillStyle:colors[i]}}})
+        
+        for (let i = 0; i < colors.length; i++){
+            const posX = x - ((colors.length - 1) * (size + SEPARATION) / 2) + ((size + SEPARATION) * i)
+            const circle = Circle({x: posX, y: getRandomArbitrary(y/2, y), radius: size, options:{
+                render:{fillStyle:colors[i]}}
+            })
 
             if(current[i]){
                 animationEngine.remove(animationEngine.world, current[i].bodyB)
                 current[i].bodyB = circle
                 animationEngine.add(animationEngine.world, circle)
             }else{
-                current[i] = Sling({x: posX, y: posY, bodyB: circle, length: 0}) 
+                current[i] = Sling({x: posX, y, bodyB: circle, length: 0}) 
                 animationEngine.add(animationEngine.world, circle)
                 animationEngine.add(animationEngine.world, current[i])  
             }
