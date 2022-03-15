@@ -1,6 +1,6 @@
 //@ts-ignore
 import {Composite} from 'matter-js'
-import { interpolate, SCREENS_RANGE } from '../../../logic/utils'
+import { interpolate } from '../../../logic/utils'
 import { LetterElement } from '../bodies/letters'
 import { Sling } from '../constraints/sling'
 
