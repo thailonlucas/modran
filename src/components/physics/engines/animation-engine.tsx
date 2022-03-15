@@ -1,5 +1,5 @@
 //@ts-ignore
-import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import {Engine, Events, Body, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
 import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
 import { BounceEllement } from './bounce-text'
@@ -75,8 +75,9 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             Composite.add(engine.world, circle)
 
             window.addEventListener('deviceorientation', (event) => {
-                circle.position.x = scale(event.gamma, [-90,90], [0,width])
-                circle.position.y = scale(event.beta, [-10,110], [0,height])
+                let x = scale(event.gamma, [-90,90], [0,width])
+                let y = scale(event.beta, [-10,110], [0,height])
+                Body.setPosition(circle, {x, y})
                 callback(event)
               }, true)
         },
