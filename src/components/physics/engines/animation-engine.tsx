@@ -1,5 +1,5 @@
 //@ts-ignore
-import {Engine, Events, Body, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
 import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
 import { BounceEllement } from './bounce-text'
