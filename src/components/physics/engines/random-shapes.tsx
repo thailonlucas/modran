@@ -22,7 +22,7 @@ export const RandomShapesGenerator = (animationEngine: IAnimationCanvasReturn):I
             const size = getRandomArbitrary(minSize, maxSize)
 
             bodies.push(animationEngine.circle({
-                x: getRandomArbitrary(size, animationEngine.width),
+                x: getRandomArbitrary(size * 2, animationEngine.width - size * 2),
                 y: getRandomArbitrary(-size, -(size*3)),
                 radius: size,
                 options:{

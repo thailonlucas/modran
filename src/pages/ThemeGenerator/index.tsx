@@ -23,7 +23,7 @@ const ThemeGenerator = () => {
     }, [WIDTH, HEIGHT])
 
     const updateShapes: any = useMemo(() => {
-      if(!animationEngine) return 
+      if(!animationEngine || !colorPalleteLabel) return 
 
       const randomShapesGenerator = RandomShapesGenerator(animationEngine)
       const colorPalleteEllement = ColorPalleteEllement(animationEngine, {
@@ -36,7 +36,7 @@ const ThemeGenerator = () => {
         colorPalleteEllement.show({colors})
         randomShapesGenerator.show({min: 5, max: 10, minSize: 10, maxSize: 80, colors})
       }
-    }, [animationEngine, WIDTH])
+    }, [animationEngine, colorPalleteLabel])
 
     useEffect(()=>{
       if(!animationEngine) return
