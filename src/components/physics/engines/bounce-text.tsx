@@ -40,7 +40,8 @@ export const BounceEllement = (animationEngine: any):IBounceTextAnimationReturn 
             }
 
             words.map((word: string, wordIndex: number) => {
-                if(word === ' ') return
+                if(word === ' ') return false
+                
                 for (let i = 0; i < word.length; i++ ){
                     if(word[i] === ' ') continue
                     const {x, y}: any = getLetterPosition({width, height, text: word, letterSize, i, wordIndex})[position]
@@ -55,6 +56,7 @@ export const BounceEllement = (animationEngine: any):IBounceTextAnimationReturn 
 
                     Composite.add(letterChain, [letter.body, sling]) 
                 }
+                return false
             })
             Composite.add(animationEngine.world, [letterChain])
         }

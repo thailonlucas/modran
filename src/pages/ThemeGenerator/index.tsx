@@ -19,9 +19,8 @@ const ThemeGenerator = () => {
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width: WIDTH, height: HEIGHT, canvasRef, boxRef})
-      newAnimationEngine.addBounceText({text: 'Click para gerar', size: LETTER_SIZE}) 
       setAnimationEngine(newAnimationEngine)
-    }, [])
+    }, [WIDTH, HEIGHT])
 
     const updateShapes: any = useMemo(() => {
       if(!animationEngine) return 
@@ -37,12 +36,12 @@ const ThemeGenerator = () => {
         colorPalleteEllement.show({colors})
         randomShapesGenerator.show({min: 5, max: 10, minSize: 10, maxSize: 80, colors})
       }
-    }, [animationEngine])
+    }, [animationEngine, WIDTH])
 
     useEffect(()=>{
       if(!animationEngine) return
       animationEngine.addBounceText({text: theme, size: LETTER_SIZE})
-    }, [theme])
+    }, [theme, animationEngine])
 
     const onChangeTheme = () => {
       generateTheme()
