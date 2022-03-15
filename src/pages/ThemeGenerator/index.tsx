@@ -10,8 +10,8 @@ const ThemeGenerator = () => {
     const INITIAL_PHRASE = 'Click para gerar'
     const WIDTH = document.documentElement.clientWidth
     const HEIGHT = document.documentElement.clientHeight
-    const LETTER_SIZE = interpolate(WIDTH, SCREENS_RANGE[0], SCREENS_RANGE[1], 14, 22)
-    const LETTER_SCALE = interpolate(LETTER_SIZE, 14, 22, 0.15, 0.22)
+    const LETTER_SIZE = interpolate(WIDTH, SCREENS_RANGE[0], SCREENS_RANGE[1], 12, 26)
+    const LETTER_SCALE = interpolate(LETTER_SIZE, 14, 20, 0.11, 0.20)
 
     const boxRef = useRef(null)
     const canvasRef = useRef(null)

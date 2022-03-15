@@ -44,7 +44,7 @@ export const LetterElement = (props: IMatterLetter) => {
         }
     })
 
-    const accent = LetterAccentElement({y: y - size * 1.6, x, letter, size: size})
+    const accent = LetterAccentElement({y: y - size * 1.4, x, letter, size: size})
 
     return{
         ...props,
@@ -68,8 +68,8 @@ export const LetterAccentElement = (props: any) => {
             fillStyle: '#000',
             sprite: {
                 texture: accent.name !== 'acute' ? require(`../sprites/${accent.name}.png`) : false,
-                xScale: interpolate(size,14,22,0.3,0.5),
-                yScale: interpolate(size,14,22,0.3,0.5)
+                xScale: interpolate(size,12,26,0.2,0.5),
+                yScale: interpolate(size,12,26,0.2,0.5)
             }
         }
     })
