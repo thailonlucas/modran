@@ -59,6 +59,27 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             });
             Composite.add(engine.world, [mouseConstraint])
         },
+        addGyroscopeConstraint: (callback) => {
+            const scale = (inputY:any, yRange:any, xRange:any) => {
+                const [xMin, xMax] = xRange;
+                const [yMin, yMax] = yRange;
+              
+                const percent = (inputY - yMin) / (yMax - yMin);
+                const outputX = percent * (xMax - xMin) + xMin;
+              
+                return outputX;
+            };
+
+        
+            const circle = Circle({x:100, y:100, radius: 21, options:{isStatic: true}})
+            Composite.add(engine.world, circle)
+
+            window.addEventListener('deviceorientation', (event) => {
+                circle.position.x = scale(event.gamma, [-90,90], [0,width])
+                circle.position.y = scale(event.beta, [-180,180], [0,height])
+                callback(event)
+              }, true)
+        },
         addFloor: () => {
             const floor = FloorElement({width: width, height: 80, x: width/2, y:height+40})
             Composite.add(engine.world, [floor])

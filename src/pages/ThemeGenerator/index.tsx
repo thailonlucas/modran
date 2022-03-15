@@ -40,12 +40,6 @@ const ThemeGenerator = () => {
     }, [animationEngine, colorPalleteLabel, WIDTH])
 
     useEffect(()=>{
-      window.addEventListener('deviceorientation', () => {
-        setOrientation('upa')
-      }, true)
-    }, [])
-
-    useEffect(()=>{
       if(!animationEngine) return
       animationEngine.addBounceText({text: theme, size: LETTER_SIZE})
     }, [theme, animationEngine])

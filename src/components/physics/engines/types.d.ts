@@ -15,6 +15,7 @@ interface IAnimationCanvasReturn{
     addFloor: () => void
     addBounceText: ({text, size}: {text: string, size: number}) => void
     addMouseConstraint: () => void
+    addGyroscopeConstraint: (callback: (event: any) => void) => void
     onAfterUpdate: (callback?: any) => void
     engine: any
     world: any
