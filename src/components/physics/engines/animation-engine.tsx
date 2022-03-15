@@ -1,5 +1,6 @@
 //@ts-ignore
 import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import { interpolate } from '../../../logic/utils'
 import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
 import { BounceEllement } from './bounce-text'
@@ -61,18 +62,8 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             Composite.add(engine.world, [mouseConstraint])
         },
         addGyroscopeConstraint: (callback) => {
-            const scale = (inputY:any, yRange:any, xRange:any) => {
-                const [xMin, xMax] = xRange;
-                const [yMin, yMax] = yRange;
-              
-                const percent = (inputY - yMin) / (yMax - yMin);
-                const outputX = percent * (xMax - xMin) + xMin;
-              
-                return outputX;
-            };
-
             window.addEventListener('deviceorientation', (event) => {
-                let x = scale(event.gamma, [-90,90], [-0.3,0.3])
+                let x = interpolate(event.gamma,-90,90, -0.3,0.3)
                 // let y = scale(event.beta, [20,60], [-1,1])
                 engine.gravity.x = x
                 // engine.gravity.y = y
@@ -85,8 +76,8 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             const floor = FloorElement({width: width, height: 80, x: width/2, y:height+40})
             Composite.add(engine.world, [floor])
         },
-        addBounceText: ({text, size}) => {
-            bounceEllement.addText({text, letterSize: size, width, height})
+        addBounceText: ({text, size, scale}) => {
+            bounceEllement.addText({text, letterSize: size, width, height, scale})
         },
         onAfterUpdate: (callback: any) => {
             Events.on(engine, 'afterUpdate', callback);

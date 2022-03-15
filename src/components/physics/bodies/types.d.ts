@@ -21,4 +21,5 @@ interface IMatterLetter {
     letter: string
     restitution?: number,
     inertia?: number
+    scale?: number
 }

@@ -13,7 +13,7 @@ interface IAnimationCanvasReturn{
     composite: ({label, id}: {label: string, id?: number}) => any
     circle: (props: ICircleProps) => any
     addFloor: () => void
-    addBounceText: ({text, size}: {text: string, size: number}) => void
+    addBounceText: ({text, size, scale}: {text: string, size: number, scale?: number}) => void
     addMouseConstraint: () => void
     addGyroscopeConstraint: (callback?: (event: any) => void) => void
     onAfterUpdate: (callback?: any) => void
@@ -26,7 +26,7 @@ interface IAnimationCanvasReturn{
 
 interface IBounceTextAnimationReturn {
     letterChain: any,
-    addText: ({}: {text: string, letterSize?: number, position?: 'top'| 'center', width: number, height: number}) => void
+    addText: ({}: {text: string, letterSize?: number, position?: 'top'| 'center', width: number, height: number, scale?: number}) => void
 }
 
 interface IRandomShapesGeneratorReturn {
