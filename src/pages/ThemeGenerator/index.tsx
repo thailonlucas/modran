@@ -36,7 +36,7 @@ const ThemeGenerator = () => {
         colorPalleteEllement.show({colors})
         randomShapesGenerator.show({min: 5, max: 10, minSize: 10, maxSize: 80, colors})
       }
-    }, [animationEngine, colorPalleteLabel])
+    }, [animationEngine, colorPalleteLabel, WIDTH])
 
     useEffect(()=>{
       if(!animationEngine) return
