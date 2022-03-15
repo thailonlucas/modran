@@ -76,7 +76,7 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
 
             window.addEventListener('deviceorientation', (event) => {
                 circle.position.x = scale(event.gamma, [-90,90], [0,width])
-                circle.position.y = scale(event.beta, [-180,180], [0,height])
+                circle.position.y = scale(event.beta, [-10,110], [0,height])
                 callback(event)
               }, true)
         },
