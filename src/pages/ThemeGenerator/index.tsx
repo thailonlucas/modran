@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ColorPalleteEllement } from '../../components/physics/engines/color-pallete'
 import { RandomShapesGenerator } from '../../components/physics/engines/random-shapes'
 import { useRandomGenerator } from '../../logic/generator/hook'
@@ -16,24 +16,19 @@ const ThemeGenerator = () => {
     const boxRef = useRef(null)
     const canvasRef = useRef(null)
     const colorPalleteLabel = useRef(null)
-
-    const [animationEngine, setAnimationEngine] = useState<any>()
+    const [animationEngine, setAnimationEngine] = useState<IAnimationCanvasReturn>()
     const {theme, colorPallete, generateTheme} = useRandomGenerator('Click para gerar')
 
-    useLayoutEffect(() => {
-      const newAnimationEngine = getAnimationEngine({
-        width: WIDTH,
-        height: HEIGHT,
-        canvasRef,
-        boxRef
-      })
+    useEffect(() => {
+      if(!canvasRef.current || !boxRef.current) return 
 
+      const newAnimationEngine = getAnimationEngine({ width: WIDTH, height: HEIGHT, canvasRef, boxRef })
       newAnimationEngine.onTouchEnd(generateTheme)
       setAnimationEngine(newAnimationEngine)
-    }, [WIDTH, HEIGHT])
+    }, [canvasRef, boxRef])
 
-    const updateShapes: any = useMemo(() => {
-      if(!animationEngine || !colorPalleteLabel) return 
+    const renderShapesOnScreen: any = useMemo(() => {
+      if(!animationEngine || !colorPalleteLabel.current) return 
 
       const randomShapesGenerator = RandomShapesGenerator(animationEngine)
       const colorPalleteEllement = ColorPalleteEllement(animationEngine, {
@@ -44,16 +39,16 @@ const ThemeGenerator = () => {
       
       return (colors: string[]) => {
         colorPalleteEllement.show({colors})
-        randomShapesGenerator.show({min: 5, max: 10, minSize: 10, maxSize: 80, colors})
+        randomShapesGenerator.show({ min: 5, max: 10, minSize: 10, maxSize: 80, colors })
       }
-    }, [animationEngine, colorPalleteLabel, WIDTH])
+    }, [animationEngine, colorPalleteLabel])
 
     useEffect(()=>{
       if(animationEngine)
-        animationEngine.addBounceText({text: theme, size: LETTER_SIZE, scale: LETTER_SCALE})
+        animationEngine.addBounceText({ text: theme, size: LETTER_SIZE, scale: LETTER_SCALE })
         
       if(theme !== INITIAL_PHRASE)
-        updateShapes(colorPallete)
+        renderShapesOnScreen(colorPallete)
     }, [theme, animationEngine])
 
     return (
