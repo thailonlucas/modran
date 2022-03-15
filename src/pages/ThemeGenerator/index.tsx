@@ -16,6 +16,7 @@ const ThemeGenerator = () => {
 
     const [animationEngine, setAnimationEngine] = useState<any>()
     const {theme, colorPallete, generateTheme} = useRandomGenerator()
+    const [orientation, setOrientation] = useState('0:0')
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width: WIDTH, height: HEIGHT, canvasRef, boxRef})
@@ -39,6 +40,12 @@ const ThemeGenerator = () => {
     }, [animationEngine, colorPalleteLabel, WIDTH])
 
     useEffect(()=>{
+      window.addEventListener('deviceorientation', () => {
+        setOrientation('upa')
+      }, true)
+    }, [])
+
+    useEffect(()=>{
       if(!animationEngine) return
       animationEngine.addBounceText({text: theme, size: LETTER_SIZE})
     }, [theme, animationEngine])
@@ -51,7 +58,7 @@ const ThemeGenerator = () => {
     return (
         <div id='theme-generator-screen' ref={boxRef} onClick={onChangeTheme}>
           <div className='screen-labels'>
-            <h1 className='theme-label'>Seu tema é</h1>
+            <h1 className='theme-label'>Seu tema é ({orientation})</h1>
             <span className='theme-empty-space'></span>
             <h2 id='color-pallete-label' className='theme-color-pallete-label' ref={colorPalleteLabel}>
               paleta de cores
