@@ -70,15 +70,14 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
                 return outputX;
             };
 
-        
-            const circle = Circle({x:100, y:100, radius: 21, options:{isStatic: true}})
-            Composite.add(engine.world, circle)
-
             window.addEventListener('deviceorientation', (event) => {
-                let x = scale(event.gamma, [-60,60], [0,width])
-                let y = scale(event.beta, [20,60], [0,height])
-                Body.setPosition(circle, {x, y})
-                callback(event)
+                let x = scale(event.gamma, [-60,60], [-1,1])
+                let y = scale(event.beta, [20,60], [-1,1])
+                engine.gravity.x = x
+                engine.gravity.y = y
+
+                if(callback)
+                    callback(event)
               }, true)
         },
         addFloor: () => {
