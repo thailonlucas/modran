@@ -16,7 +16,7 @@ const ThemeGenerator = () => {
 
     const [animationEngine, setAnimationEngine] = useState<any>()
     const {theme, colorPallete, generateTheme} = useRandomGenerator()
-    const [orientation, setOrientation] = useState('0:0')
+    const [orientation] = useState('0:0')
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width: WIDTH, height: HEIGHT, canvasRef, boxRef})
