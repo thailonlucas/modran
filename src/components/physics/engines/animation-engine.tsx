@@ -22,6 +22,7 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
     const runner = Runner.create()
     const render = Render.create(renderConfig)
     const bounceEllement = BounceEllement(engine)
+    let mouse, mouseConstraint: any = undefined
 
     return {
         engine,
@@ -47,7 +48,7 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             return Circle(props)
         },
         addMouseConstraint: ({stiffness, visible}: {stiffness?: number, visible?: boolean} = {}) => {
-            var mouse = Mouse.create(render.canvas),
+            mouse = Mouse.create(render.canvas)
             mouseConstraint = MouseConstraint.create(engine, {
                 mouse: mouse,
                 constraint: {
@@ -89,6 +90,9 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
         },
         onAfterUpdate: (callback: any) => {
             Events.on(engine, 'afterUpdate', callback);
-        }
+        },
+        onTouchEnd: (callback) => {
+            Events.on(mouseConstraint, 'mouseup', callback);
+        },
     }
 }

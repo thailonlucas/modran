@@ -7,6 +7,7 @@ import './style.scss'
 
 const ThemeGenerator = () => {
     const LETTER_SIZE = 20
+    const INITIAL_PHRASE = 'Click para gerar'
     const WIDTH = document.documentElement.clientWidth
     const HEIGHT = document.documentElement.clientHeight
 
@@ -15,10 +16,13 @@ const ThemeGenerator = () => {
     const colorPalleteLabel = useRef(null)
 
     const [animationEngine, setAnimationEngine] = useState<any>()
-    const {theme, colorPallete, generateTheme} = useRandomGenerator()
+    const {theme, colorPallete, generateTheme} = useRandomGenerator('Click para gerar')
 
     useLayoutEffect(() => {
       const newAnimationEngine = getAnimationEngine({width: WIDTH, height: HEIGHT, canvasRef, boxRef})
+      newAnimationEngine.onTouchEnd(() => {
+        generateTheme()
+      })
       setAnimationEngine(newAnimationEngine)
     }, [WIDTH, HEIGHT])
 
@@ -39,17 +43,16 @@ const ThemeGenerator = () => {
     }, [animationEngine, colorPalleteLabel, WIDTH])
 
     useEffect(()=>{
-      if(!animationEngine) return
-      animationEngine.addBounceText({text: theme, size: LETTER_SIZE})
+      if(animationEngine)
+        animationEngine.addBounceText({text: theme, size: LETTER_SIZE})
+        
+      if(theme !== INITIAL_PHRASE)
+        updateShapes(colorPallete)
     }, [theme, animationEngine])
 
-    const onChangeTheme = () => {
-      generateTheme()
-      updateShapes(colorPallete)
-    }
-      
     return (
-        <div id='theme-generator-screen' ref={boxRef} onClick={onChangeTheme}>
+        <div id='theme-generator-screen' ref={boxRef}>
+          <canvas ref={canvasRef}/>
           <div className='screen-labels'>
             <h1 className='theme-label'>Seu tema é:</h1>
             <span className='theme-empty-space'></span>
@@ -57,7 +60,6 @@ const ThemeGenerator = () => {
               paleta de cores
             </h2>
           </div>
-          <canvas ref={canvasRef} />
         </div>
       )
 }
