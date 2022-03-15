@@ -75,8 +75,8 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             Composite.add(engine.world, circle)
 
             window.addEventListener('deviceorientation', (event) => {
-                let x = scale(event.gamma, [-90,90], [0,width])
-                let y = scale(event.beta, [-10,110], [0,height])
+                let x = scale(event.gamma, [-60,60], [0,width])
+                let y = scale(event.beta, [20,60], [0,height])
                 Body.setPosition(circle, {x, y})
                 callback(event)
               }, true)
