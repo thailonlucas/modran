@@ -1,5 +1,6 @@
 //@ts-ignore
 import {Engine, Events, Render, Runner, Composite, Mouse, MouseConstraint} from 'matter-js'
+import { interpolate } from '../../../logic/utils'
 import { Circle } from '../bodies/circles'
 import { FloorElement } from '../bodies/floor'
 import { BounceEllement } from './bounce-text'
@@ -22,6 +23,7 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
     const runner = Runner.create()
     const render = Render.create(renderConfig)
     const bounceEllement = BounceEllement(engine)
+    let mouse, mouseConstraint: any = undefined
 
     return {
         engine,
@@ -47,7 +49,7 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             return Circle(props)
         },
         addMouseConstraint: ({stiffness, visible}: {stiffness?: number, visible?: boolean} = {}) => {
-            var mouse = Mouse.create(render.canvas),
+            mouse = Mouse.create(render.canvas)
             mouseConstraint = MouseConstraint.create(engine, {
                 mouse: mouse,
                 constraint: {
@@ -59,15 +61,29 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             });
             Composite.add(engine.world, [mouseConstraint])
         },
+        addGyroscopeConstraint: (callback) => {
+            window.addEventListener('deviceorientation', (event) => {
+                let x = interpolate(event.gamma,-90,90, -0.3,0.3)
+                // let y = scale(event.beta, [20,60], [-1,1])
+                engine.gravity.x = x
+                // engine.gravity.y = y
+
+                if(callback)
+                    callback(event)
+              }, true)
+        },
         addFloor: () => {
             const floor = FloorElement({width: width, height: 80, x: width/2, y:height+40})
             Composite.add(engine.world, [floor])
         },
-        addBounceText: ({text, size}) => {
-            bounceEllement.addText({text, letterSize: size, width, height})
+        addBounceText: ({text, size, scale}) => {
+            bounceEllement.addText({text, letterSize: size, width, height, scale})
         },
         onAfterUpdate: (callback: any) => {
             Events.on(engine, 'afterUpdate', callback);
-        }
+        },
+        onTouchEnd: (callback) => {
+            Events.on(mouseConstraint, 'mouseup', callback);
+        },
     }
 }

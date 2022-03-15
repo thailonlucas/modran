@@ -1,5 +1,6 @@
 //@ts-ignore
 import { Bodies, Body } from 'matter-js'
+import { interpolate } from '../../../logic/utils'
 const ACCENT_HEIGHT = 7
 const LETTER_ACCENT = [
     {
@@ -27,7 +28,7 @@ const getLetterSprite = (letter: string) => {
 }
 
 export const LetterElement = (props: IMatterLetter) => {
-    const {x, y, size, letter, inertia = 99999999, restitution = 0.1} = props
+    const {x, y, size, letter, inertia = 99999999, restitution = 0.1, scale = 1} = props
     const letterWithoutAccent = letter.normalize("NFD").replace(/\p{Diacritic}/gu, "")
 
     const body = Bodies.circle(x, y, size, {
@@ -37,13 +38,13 @@ export const LetterElement = (props: IMatterLetter) => {
         render: {
             sprite:{
                 texture: getLetterSprite(letterWithoutAccent),
-                xScale: 0.25,
-                yScale: 0.25
+                xScale: scale,
+                yScale: scale
             }
         }
     })
 
-    const accent = LetterAccentElement({y: y - size * 1.7, x, letter, size: size})
+    const accent = LetterAccentElement({y: y - size * 1.4, x, letter, size: size})
 
     return{
         ...props,
@@ -67,8 +68,8 @@ export const LetterAccentElement = (props: any) => {
             fillStyle: '#000',
             sprite: {
                 texture: accent.name !== 'acute' ? require(`../sprites/${accent.name}.png`) : false,
-                xScale: 0.5,
-                yScale: 0.5
+                xScale: interpolate(size,12,26,0.2,0.5),
+                yScale: interpolate(size,12,26,0.2,0.5)
             }
         }
     })

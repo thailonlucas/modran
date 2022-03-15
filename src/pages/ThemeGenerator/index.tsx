@@ -2,23 +2,33 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ColorPalleteEllement } from '../../components/physics/engines/color-pallete'
 import { RandomShapesGenerator } from '../../components/physics/engines/random-shapes'
 import { useRandomGenerator } from '../../logic/generator/hook'
+import { interpolate, SCREENS_RANGE } from '../../logic/utils'
 import { getAnimationEngine } from './controller'
 import './style.scss'
 
 const ThemeGenerator = () => {
-    const LETTER_SIZE = 20
+    const INITIAL_PHRASE = 'Click para gerar'
     const WIDTH = document.documentElement.clientWidth
     const HEIGHT = document.documentElement.clientHeight
+    const LETTER_SIZE = interpolate(WIDTH, SCREENS_RANGE[0], SCREENS_RANGE[1], 12, 26)
+    const LETTER_SCALE = interpolate(LETTER_SIZE, 14, 20, 0.11, 0.20)
 
     const boxRef = useRef(null)
     const canvasRef = useRef(null)
     const colorPalleteLabel = useRef(null)
 
     const [animationEngine, setAnimationEngine] = useState<any>()
-    const {theme, colorPallete, generateTheme} = useRandomGenerator()
+    const {theme, colorPallete, generateTheme} = useRandomGenerator('Click para gerar')
 
     useLayoutEffect(() => {
-      const newAnimationEngine = getAnimationEngine({width: WIDTH, height: HEIGHT, canvasRef, boxRef})
+      const newAnimationEngine = getAnimationEngine({
+        width: WIDTH,
+        height: HEIGHT,
+        canvasRef,
+        boxRef
+      })
+
+      newAnimationEngine.onTouchEnd(generateTheme)
       setAnimationEngine(newAnimationEngine)
     }, [WIDTH, HEIGHT])
 
@@ -39,25 +49,23 @@ const ThemeGenerator = () => {
     }, [animationEngine, colorPalleteLabel, WIDTH])
 
     useEffect(()=>{
-      if(!animationEngine) return
-      animationEngine.addBounceText({text: theme, size: LETTER_SIZE})
+      if(animationEngine)
+        animationEngine.addBounceText({text: theme, size: LETTER_SIZE, scale: LETTER_SCALE})
+        
+      if(theme !== INITIAL_PHRASE)
+        updateShapes(colorPallete)
     }, [theme, animationEngine])
 
-    const onChangeTheme = () => {
-      generateTheme()
-      updateShapes(colorPallete)
-    }
-      
     return (
-        <div id='theme-generator-screen' ref={boxRef} onClick={onChangeTheme}>
+        <div id='theme-generator-screen' ref={boxRef}>
+          <canvas ref={canvasRef}/>
           <div className='screen-labels'>
-            <h1 className='theme-label'>Seu tema é</h1>
+            <h1 className='theme-label'>Seu tema é:</h1>
             <span className='theme-empty-space'></span>
             <h2 id='color-pallete-label' className='theme-color-pallete-label' ref={colorPalleteLabel}>
               paleta de cores
             </h2>
           </div>
-          <canvas ref={canvasRef} />
         </div>
       )
 }
