@@ -72,10 +72,10 @@ export const AnimationEngine = (props: IAnimationCanvas): IAnimationCanvasReturn
             };
 
             window.addEventListener('deviceorientation', (event) => {
-                let x = scale(event.gamma, [-60,60], [-1,1])
-                let y = scale(event.beta, [20,60], [-1,1])
+                let x = scale(event.gamma, [-90,90], [-0.3,0.3])
+                // let y = scale(event.beta, [20,60], [-1,1])
                 engine.gravity.x = x
-                engine.gravity.y = y
+                // engine.gravity.y = y
 
                 if(callback)
                     callback(event)
