@@ -32,8 +32,9 @@ header{
   display: flex;
   position: absolute;
   top: 0;
-  padding: 16px;
-  width: 100vw;
+  width: 100%;
+  padding: 16px 32px;
+  box-sizing: border-box;
   justify-content: space-between;
   box-sizing: border-box;
 
